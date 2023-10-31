@@ -1,0 +1,39 @@
+-- View entire dataset
+
+SELECT *
+FROM Drug.deaths;
+
+-- QUESTION 1: How many drug-related deaths occurred for each Sex (Male, Female)?
+
+SELECT
+    SUM(CASE WHEN Sex = 'Male' THEN 1 ELSE 0 END) AS Males,
+    SUM(CASE WHEN Sex = 'Female' THEN 1 ELSE 0 END) AS Females
+FROM Drug.deaths;
+
+-- QUESTION 2: What is the age distribution?  
+
+SELECT DISTINCT(Age) 
+FROM Drug.deaths
+WHERE Age IS NOT NULL
+ORDER BY AGE ASC;
+
+-- QUESTION 3: Can you provide a breakdown by Death city?
+
+SELECT DISTINCT(Death_City)
+FROM Drug.deaths
+WHERE Death_City IS NOT NULL
+ORDER BY Death_City ASC; 
+
+-- QUESTION 4: How many cases involved heroin as a cause of death?
+
+SELECT COUNT(Heroin) As Heroin_involved, COUNT(Heroin_death_certificate__DC_) AS On_death_certificate
+FROM Drug.deaths;
+ 
+-- same query result but it appeals to the Heroin and Heroin_death_certificate__DC_ columns which are BOOLEAN data types. 
+
+SELECT
+    SUM(CASE WHEN Heroin = true THEN 1 ELSE 0 END) AS Heroin_involved,
+    SUM(CASE WHEN Heroin_death_certificate__DC_ = true THEN 1 ELSE 0 END) AS On_death_certificate
+FROM Drug.deaths;
+
+--
