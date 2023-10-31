@@ -10,7 +10,7 @@ SELECT
     SUM(CASE WHEN Sex = 'Female' THEN 1 ELSE 0 END) AS Females
 FROM Drug.deaths;
 
--- QUESTION 2: What is the age distribution?  
+-- QUESTION 2: What is the age range?  
 
 SELECT DISTINCT(Age) 
 FROM Drug.deaths
