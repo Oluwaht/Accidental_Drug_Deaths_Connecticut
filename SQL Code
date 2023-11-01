@@ -1,7 +1,7 @@
 -- View entire dataset
 
 SELECT *
-FROM Drug.deaths;
+FROM Drug.deaths
 
 -- QUESTION 1: How many drug-related deaths occurred for each Sex (Male, Female)?
 
@@ -16,6 +16,8 @@ SELECT DISTINCT(Age)
 FROM Drug.deaths
 WHERE Age IS NOT NULL
 ORDER BY AGE ASC;
+
+
 
 -- QUESTION 3: Can you provide a breakdown by Death city?
 
@@ -36,4 +38,125 @@ SELECT
     SUM(CASE WHEN Heroin_death_certificate__DC_ = true THEN 1 ELSE 0 END) AS On_death_certificate
 FROM Drug.deaths;
 
---
+
+-- QUESTION 5: What are the top five substances used?
+
+SELECT
+    'Heroin' AS Substance,
+    COUNT(*) AS SubstanceCount
+FROM Drug.deaths
+WHERE Heroin = true
+UNION ALL
+SELECT
+    'Cocaine' AS Substance,
+    COUNT(*) AS SubstanceCount
+FROM Drug.deaths
+WHERE Cocaine = true
+UNION ALL
+SELECT
+    'Fentanyl' AS Substance,
+    COUNT(*) AS SubstanceCount
+FROM Drug.deaths
+WHERE Fentanyl = true
+UNION ALL
+SELECT
+    'Fentanyl Analogue' AS Substance,
+    COUNT(*) AS SubstanceCount
+FROM Drug.deaths
+WHERE Fentanyl_Analogue = true
+UNION ALL
+SELECT
+    'Oxycodone' AS Substance,
+    COUNT(*) AS SubstanceCount
+FROM Drug.deaths
+WHERE Oxycodone = true
+ORDER BY SubstanceCount DESC
+LIMIT 5;
+
+-- QUESTION 6: How many cases involve "Any Opioid" as a potential cause of death?
+
+SELECT COUNT(*) AS CasesWithAnyOpioid
+FROM Drug.deaths
+WHERE Any_Opioid = true;
+
+
+
+-- QUESTION 7: What is the trend in heroin-related deaths over the years?
+
+-- Heroin
+
+SELECT subq.Date, subq.Heroin
+FROM (
+    SELECT Date, Heroin
+    FROM Drug.deaths
+    WHERE Heroin IS NOT NULL
+    ORDER BY PARSE_DATE('%m/%d/%Y', Date) ASC
+) AS subq;
+
+
+-- Heroin_Morph_Codeine
+
+SELECT subq.Date, subq.Heroin_Morph_Codeine
+FROM (
+    SELECT Date, Heroin_Morph_Codeine
+    FROM Drug.deaths
+    WHERE Heroin_Morph_Codeine IS NOT NULL
+    ORDER BY PARSE_DATE('%m/%d/%Y', Date) ASC
+) AS subq;
+
+
+
+-- Heroin_death_certificate__DC_
+
+SELECT subq.Date, subq.Heroin_death_certificate__DC_
+FROM (
+    SELECT Date, Heroin_death_certificate__DC_
+    FROM Drug.deaths
+    WHERE Heroin_death_certificate__DC_ IS NOT NULL
+    ORDER BY PARSE_DATE('%m/%d/%Y', Date) ASC
+) AS subq;
+
+
+-- all 3 columns
+
+SELECT subq.Date, subq.Heroin, subq.Heroin_Morph_Codeine, subq.Heroin_death_certificate__DC_
+FROM (
+    SELECT Date, Heroin, Heroin_Morph_Codeine, Heroin_death_certificate__DC_
+    FROM Drug.deaths
+    WHERE Heroin AND Heroin_Morph_Codeine AND Heroin_death_certificate__DC_ IS NOT NULL
+    ORDER BY PARSE_DATE('%m/%d/%Y', Date) ASC
+) AS subq;
+
+
+-- Question 8: How many cases involve fentanyl as a cause of death?
+
+SELECT COUNT(*) AS Fentanyl_deaths
+FROM Drug.deaths
+WHERE Fentanyl = true;
+
+SELECT COUNT(*) AS Fentanyl_Analogue_deaths
+FROM Drug.deaths
+WHERE Fentanyl_Analogue = true;
+
+-- Question 9: Can you provide the number of deaths associated with oxycodone and oxymorphone, respectively?
+
+-- Oxycodone
+
+SELECT COUNT(*) AS Oxycodone_deaths
+FROM Drug.deaths
+WHERE Oxycodone = true;
+
+-- Oxymorphone
+
+SELECT COUNT(*) AS Oxymorphone_deaths
+FROM Drug.deaths
+WHERE Oxymorphone = true;
+
+-- QUESTION 10: Which city has the highest number of drug-related deaths?
+
+SELECT Death_City, COUNT(*) AS DeathCount
+FROM Drug.deaths
+WHERE Death_City IS NOT NULL
+GROUP BY Death_City
+ORDER BY DeathCount DESC
+LIMIT 10;
