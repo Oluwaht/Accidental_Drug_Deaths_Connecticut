@@ -23,6 +23,10 @@ ORDER BY AGE ASC;
 
 SELECT DISTINCT(Death_City)
 FROM Drug.deaths
+ORDER BY Death_City ASC; 
+
+SELECT DISTINCT(Death_City)
+FROM Drug.deaths
 WHERE Death_City IS NOT NULL
 ORDER BY Death_City ASC; 
 
@@ -160,3 +164,24 @@ WHERE Death_City IS NOT NULL
 GROUP BY Death_City
 ORDER BY DeathCount DESC
 LIMIT 10;
+
+
+-- QUESTION 11: What is the most common location for drug deaths? 
+
+SELECT Location, COUNT(*) AS DeathCount
+FROM Drug.deaths
+GROUP BY Location
+ORDER BY DeathCount DESC
+LIMIT 5;
+
+-- Injury place 
+SELECT Injury_Place, COUNT(*) AS DeathCount
+FROM Drug.deaths
+GROUP BY Injury_Place
+ORDER BY DeathCount DESC
+LIMIT 5;
+
+
+
+
+
