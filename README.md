@@ -7,7 +7,8 @@ This analysis focuses on accidental drug-related deaths in Connecticut from 2012
 
 ## Data Source
 
-The dataset used for this analysis can be found here: https://catalog.data.gov/dataset/accidental-drug-related-deaths-2012-2018
+The dataset used for this analysis can be found at Data.gov
+https://catalog.data.gov/dataset/accidental-drug-related-deaths-2012-2018
 It includes information about accidental drug-related deaths, offering a comprehensive view of the issue in Connecticut.
 
 ## Key Findings
