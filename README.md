@@ -41,7 +41,8 @@ Fentanyl was the most common substance involved in deaths.
 Circumstances
 Location of Deaths:
 The most common location for victims was at their residence.
-Interpretation
+
+## Closing
 
 This analysis sheds light on the significant impact of accidental drug-related deaths in Connecticut over the past decade. The data provides valuable insights into the demographics of the affected population, the prevalence of specific substances like heroin and fentanyl, and the geographical distribution of these incidents.
 
